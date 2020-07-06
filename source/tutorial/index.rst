@@ -6,4 +6,5 @@ NumPy教程
     :maxdepth: 1
 
     intro
+    install
 
