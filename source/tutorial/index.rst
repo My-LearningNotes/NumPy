@@ -9,4 +9,5 @@ NumPy教程
     ndarray
     data_type
     array_creation
+    indexing_slicing_iterating
 
