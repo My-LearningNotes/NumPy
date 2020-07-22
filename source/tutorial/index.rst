@@ -7,4 +7,5 @@ NumPy教程
     intro
     install
     ndarray
+    data_type
 
