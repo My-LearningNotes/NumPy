@@ -8,4 +8,5 @@ NumPy教程
     install
     ndarray
     data_type
+    array_creation
 
