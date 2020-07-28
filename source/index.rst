@@ -1,5 +1,5 @@
-NumPy学习笔记
-=============
+NumPy笔记
+=========
 
 .. toctree::
     :maxdepth: 2

@@ -1,13 +1,8 @@
-NumPy教程
-=========
+Quickstart tutorial
+===================
 
 .. toctree::
     :maxdepth: 1
 
-    intro
-    install
-    ndarray
-    data_type
-    array_creation
-    indexing_slicing_iterating
+    basics/index
 
