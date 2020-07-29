@@ -5,4 +5,5 @@ Quickstart tutorial
     :maxdepth: 1
 
     basics/index
+    copies_and_views
 
