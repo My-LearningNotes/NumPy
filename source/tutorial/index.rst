@@ -6,6 +6,7 @@ Quickstart tutorial
 
     intro
     basics
+    array_creation
     copies_and_views
     manipulations
 
