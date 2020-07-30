@@ -4,7 +4,7 @@ Quickstart tutorial
 .. toctree::
     :maxdepth: 1
 
-    basics/index
+    intro
     copies_and_views
     manipulations
 
