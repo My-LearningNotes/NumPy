@@ -5,6 +5,7 @@ Quickstart tutorial
     :maxdepth: 1
 
     intro
+    basics
     copies_and_views
     manipulations
 

@@ -1,10 +1,13 @@
-NumPy ndarray对象
-=================
+The Basics
+==========
 
-NumPy的核心是N维数组对象\ ``ndarray``\ , 它是一系列相同类型数据的集合. 
+``ndarray``
+-----------
+
+NumPy的核心是N维数组对象\ ``ndarray``\ , 它是一系列相同类型数据的集合.
 
     * 可以使用索引访问数组元素, 索引从0开始;
-    * 数组的\ **维数(dimensions)**\ 称为\ **秩(rank)**\ , 在NumPy中称为\ **轴(axes)**\ . 
+    * 数组的\ **维数(dimensions)**\ 称为\ **秩(rank)**\ , 在NumPy中称为\ **轴(axes)**\ .
 
 Example:
 
@@ -47,36 +50,10 @@ Example:
 
     * ``ndarray.data``
 
-    包含实际数组元素的缓冲区.
 
+NumPy数据类型
+-------------
 
-Example:
+NumPy支持的数据类型比Python内置的类型要多很多, 基本上可以和C语言的数据类型对应上, 其中部分类型对应Python的内置类型.
 
-.. code-block:: python
-
-    >>> import numpy as np
-    >>> a = np.arange(15).reshape(3, 5)
-    >>> a
-    array([[ 0,  1,  2,  3,  4],
-           [ 5,  6,  7,  8,  9],
-           [10, 11, 12, 13, 14]])
-    >>> a.ndim
-    2
-    >>> a.shape
-    (3, 5)
-    >>> a.dtype.name
-    'int64'
-    >>> a.size
-    15
-    >>> a.itemsize
-    8
-    >>> a.data
-    <memory at 0x7f14eabcb120>
-    >>> type(a)
-    <class 'numpy.ndarray'>
-    >>> b = np.array([6, 7, 8])
-    >>> b
-    array([6, 7, 8])
-    >>> type(b)
-    <class 'numpy.ndarray'>
-
+`NumPy Data types <https://numpy.org/doc/1.19/user/basics.types.html>`_
