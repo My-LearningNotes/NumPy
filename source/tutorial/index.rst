@@ -6,4 +6,5 @@ Quickstart tutorial
 
     basics/index
     copies_and_views
+    manipulations
 
