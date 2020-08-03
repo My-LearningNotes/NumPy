@@ -162,3 +162,43 @@ Example:
     >>> d
     (array([ 1.,  2.,  3.,  4.,  5.,  6.,  7.,  8.,  9., 10.]), 1.0)
 
+
+``numpy.logspace()``
+^^^^^^^^^^^^^^^^^^^^
+
+``numpy.logspace()``\ 函数用于创建一个等比例数组:
+
+.. code-block:: python
+
+    numpy.logspace(start, stop, num=50, endpoint=True, base=10.0, dtype=None)
+
+============= ====================================================================
+``start``     序列的起始值为: base ** start
+``stop``      序列的终止值为: base ** stop, 如果endpoint为True, 该值包含于数组中
+``num``       要生成的样本数量, 默认为50
+``endpoint``  该值为True时, 数组中包含stop值, 否则不包含
+``base``      基数
+``dtype``     数据类型
+============= ====================================================================
+
+Example:
+
+.. code-block:: python
+    :emphasize-lines: 2
+
+    >>> import numpy as np
+    >>> a = np.logspace(1.0, 2.0, num = 10)
+    >>> a
+    array([ 10.        ,  12.91549665,  16.68100537,  21.5443469 ,
+            27.82559402,  35.93813664,  46.41588834,  59.94842503,
+            77.42636827, 100.        ])
+
+将基数设置为2:
+
+.. code-block:: python
+    :emphasize-lines: 1
+
+    >>> a = np.logspace(0, 9, 10, base = 2)
+    >>> a
+    array([  1.,   2.,   4.,   8.,  16.,  32.,  64., 128., 256., 512.])
+
