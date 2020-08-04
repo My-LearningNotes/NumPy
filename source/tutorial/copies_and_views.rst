@@ -134,6 +134,7 @@ View or Shallow Copy
     True
 
 
+
 Deep Copy
 ---------
 
@@ -161,4 +162,133 @@ The ``copy`` method makes a complete copy of the array and its data.
     >>> s = a[:, 1:3].copy()
     >>> s.base is a
     False
+
+
+******
+
+判断是否共享内存
+----------------
+
+* ``ndarray.base``
+
+通过\ ``ndarray.base``\ 属性判断当前的数组是否是另一个数组的视图.
+
+Example:
+
+.. code-block:: python
+    :emphasize-lines: 3
+
+    >>> a = np.arange(10)
+    >>> b = a.reshape(2, 5)
+    >>> b.base is a
+
+* ``np.may_share_memory()``
+
+通过\ ``np.may_share_memory()``\ 函数判断两个数组对象是否共享内存.
+
+Example:
+
+.. code-block:: python
+    :emphasize-lines: 1
+
+    >>> np.may_share_memory(a, b)
+    True
+
+* 通过数组对象的\ ``flags``\ 属性
+
+通过数组对象的\ ``flags``\ 属性中的\ ``OWNDATA``\ 字段判断.
+
+Example:
+
+.. code-block:: python
+    :emphasize-lines: 1, 3
+
+    >>> b.flags['OWNDATA']
+    False
+    >>> a.flags['OWNDATA']
+    True
+
+
+view的用法
+----------
+
+对于内存中的数据, 其意义取决于如何解析它.
+
+在\ ``numpy.ndarray.view``\ 中, 提供对内存区域不同的切割方式, 来完成数据类型的转换, 而无需对数据进行额外的copy, 从而节约时间和空间.
+
+Example:
+
+.. code-block:: python
+
+    >>> import numpy as np
+    >>> x = np.arange(10, dtype = np.int)
+    >>> x
+    array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+
+上面的代码, 定义了一个元素类型为\ ``np.int``\ 的数组. 
+进一步的, 创建一个它的视图:
+
+.. code-block:: python
+
+    >>> y = x.view(np.byte)
+    >>> y
+    array([0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0,
+           0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0,
+           0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 8, 0,
+           0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0], dtype=int8)
+
+    >>> x.shape
+    (10,)
+    >>> y.shape
+    (80,)
+
+可以看到, 同一段内存空间, 可以按照不同的方式对其进行解析, 得到不同的结果.
+
+除了可以对数据类型做不同的解析外, 还可以对数组的shape做不同的解析. 
+对于连续区域的数组, 可以重新定义它的shape; 而对于非连续的区域数据, 重新定义shape将产生错误.
+
+.. code-block:: python
+    :emphasize-lines: 7
+
+    >>> a = np.zeros((10, 2))
+    # A transpose make the array non-continuous
+    >>> b = a.T
+    # Taking a view makes it possible to modify the shape without modiying the 
+    # initial object.
+    >>> c = b.view()
+    >>> c.shape = 20
+    Traceback (most recent call last):
+        File "<stdin>", line 1, in <module>
+    AttributeError: Incompatible shape for in-place modification. Use `.reshape()` to make a copy with the desired shape.
+
+接下来, 看一看\ ``numpy.reshape()``\ 函数, 对于其返回值的解释:
+
+    This will be a new view object if possible; otherwise, it will be a copy.
+
+    note: It is not always possible to change the shape of an array without copying the data. 
+
+          If you want an error to be raise if the data is copied, you should assign the new shape to the shape attribute of the array.
+
+    其返回值可能是一个view, 或是一个copy.
+
+    当数据区域是连续的时候, 返回一个view; 否则返回一个copy.
+
+    如果希望其在返回一个copy时报错的话, 改变shape的方式就不能使用reshape()函数, 而应该直接改变这个数组的shape属性.
+    如上例中的c.shape = (20,), 在上例中, 如果使用c = b.view.reshape(20), 则此时c是b的一个copy.
+
+
+
+在数字图像处理中的应用
+----------------------
+
+当需要对输入图像三个通道进行相同的处理时, 使用\ ``cv2.split``\ 和\ ``cv2.merge``\ 是相当浪费资源的, 因为任何一个通道的数据对处理来说都是一样的, 
+可以用view来将其转换为一维矩阵后再做处理, 这就不需要额外的内存和时间开销.
+
+.. code-block:: python
+
+    def createFlatView(array):
+        '''Return a 1D view of an array of any dimensionally'''
+        flatView = array.view()
+        flatView.shape = array.size
+        return flatView
 
