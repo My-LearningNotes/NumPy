@@ -11,4 +11,4 @@ Quickstart tutorial
     indexing_slicing_iterating
     copies_and_views
     manipulations
-
+    math_functions
