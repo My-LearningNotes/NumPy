@@ -27,7 +27,7 @@ NumPy学习笔记
     :maxdepth: 1
 
     install
-    basics
+    ndarray
     array_creation
     broadcast
     indexing_slicing_iterating
