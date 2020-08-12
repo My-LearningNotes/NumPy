@@ -1,22 +1,21 @@
-Copies and Views
+引用, 副本和视图
 ================
 
-``ndarray``\ 是一个数组对象, 除了其中的实际数据之外, 还有一些其它的内容.
-
-* 引用, 就是别名;
-* 副本是一个对象的完整拷贝, 如果我们对副本进行修改, 它不会影响到原始数据;
-* 视图, 它的作用是用来查看原始对象的数据, 它就像原始对象的一个影子, 正如影子不能脱离本体存在一样, 视图也不能脱离原始对象, 必须从原始对象来创建. 
-  视图,是一种浅拷贝, 它是一个新的对象, 但它的实际数据部分和原始对象是共享的, 即是内存中的同一块数据, 所以视图中对数据的修改会影响原始对象.
+* **引用**, 就是别名;
+* **副本**\ 是一个对象的完整拷贝(深拷贝), 如果我们对副本进行修改, 它不会影响到原始数据;
+* **视图**\ 是一种浅拷贝, 它是一个新的对象, 但它的实际数据部分和原始对象是共享的, 即是内存中的同一块数据, 所以视图中对数据的修改会影响原始对象.
 
 .. note::
 
     视图, 也是一个\ ``ndarray``\ 类型的对象, 只不过它是原始对象的"影子", 要从原始对象创建而来.
 
-    对于一个\ ``ndarray``\ 对象, 可以通过\ ``ndarray.base``\ 属性查看其是否是视图, 以及它的原始数据.
+    对于一个\ ``ndarray``\ 对象, 可以通过\ ``ndarray.base``\ 属性查看其是否是视图, 以及它的原始数据. 
+    如果\ ``ndarray.base``\ 为空, 表示该数组对象不是视图. 
 
     NumPy文档中对\ ``ndarray.base``\ 属性的解释:
 
-    If the array is a view into another array, that array is its 'base'(Unless that array is also a view    ). The 'base' array is where the array data is actually stored.
+        If the array is a view into another array, that array is its 'base'(Unless that array is also a view). 
+        The 'base' array is where the array data is actually stored.
 
     ``ndarray.base``\ 就是浅复制时的原始数据.
 
@@ -32,7 +31,6 @@ Copies and Views
 
 
 When operating and manipulating arrays, their data is sometimes copied into a new array and sometimes not.
-
 There are three cases:
 
 Not Copy at all
@@ -40,7 +38,7 @@ Not Copy at all
 
 Simple assignments make no copy of objects or their data.
 
-简单的赋值操作, 即把一个数组赋值给另一个数组, 属于浅复制, 传递的是引用, 不会复制数据.
+简单的赋值操作, 即把一个数组赋值给另一个数组, 属于引用传递, 不会复制数据.
 
 .. code-block:: python
 
@@ -51,7 +49,7 @@ Simple assignments make no copy of objects or their data.
     >>> b is a
     True
 
-把数组作为函数的参数传递时, 也是浅复制.
+把数组作为函数的参数传递时, 也是引用传递.
 
 .. code-block:: python
 
@@ -134,7 +132,6 @@ View or Shallow Copy
     True
 
 
-
 Deep Copy
 ---------
 
@@ -162,6 +159,11 @@ The ``copy`` method makes a complete copy of the array and its data.
     >>> s = a[:, 1:3].copy()
     >>> s.base is a
     False
+
+    
+.. note::
+
+    在对数组进行操作时, 需要注意操作的是原始数组, 还是其副本或视图.
 
 
 ******
@@ -273,8 +275,13 @@ Example:
 
     当数据区域是连续的时候, 返回一个view; 否则返回一个copy.
 
-    如果希望其在返回一个copy时报错的话, 改变shape的方式就不能使用reshape()函数, 而应该直接改变这个数组的shape属性.
-    如上例中的c.shape = (20,), 在上例中, 如果使用c = b.view.reshape(20), 则此时c是b的一个copy.
+    如果希望其在返回一个copy时报错的话, 改变shape的方式就不能使用\ ``reshape()``\ 函数, 而应该直接改变这个数组的shape属性.
+    如上例中的\ ``c.shape = (20,)``\ , 在上例中, 如果使用\ ``c = b.view.reshape(20)``, 则此时c是b的一个copy.
+
+ 
+.. note::
+
+    一个数组对象, 创建一个它的视图, 在不复制数据的情况下, 以另外的意义解析它.
 
 
 
